@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web.demo.mapper.UserMapper">
+    <resultMap id="stuMap" type="com.example.web.demo.model.User">
+        <id property="userId" column="user_id"/>
+        <result property="userAccount" column="user_account"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userAge" column="user_age"/>
+        <result property="userSex" column="user_sex"/>
+    </resultMap>
+
+    <resultMap id="idMap" type="com.example.web.demo.model.SearchModel">
+        <result property="myId" column="id"/>
+        <result property="friendId" column="user_id"/>
+    </resultMap>
+
+    <select id="findUserByAccount" parameterType="com.example.web.demo.model.User" resultMap="stuMap">
+        SELECT *
+        FROM  user_role
+         WHERE user_account = #{userAccount}
+         AND user_password = #{userPassword}
+    </select>
+    
+    <select id="findUserFriendsById" parameterType="java.lang.Integer" resultMap="stuMap">
+        SELECT
+        user_role.user_id,
+        user_role.user_account,
+        user_role.user_name,
+        user_role.user_age,
+        user_role.user_sex
+        FROM user_role
+        LEFT JOIN user_friend
+        ON user_role.user_id = user_friend.user_id
+        WHERE user_friend.id = #{userId}
+    </select>
+
+    <select id="searchFriendByAccount" resultMap="stuMap">
+        SELECT user_id , user_account , user_name , user_age , user_sex
+        FROM user_role
+        WHERE user_account = #{userAccount}
+    </select>
+
+    <select id="searchFriendById" resultMap="stuMap">
+        SELECT user_id , user_account , user_name , user_age , user_sex
+        FROM user_role
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--用来判断该人是否已经是他的好友-->
+    <select id="searchFriendExit" resultMap="idMap">
+        SELECT user_id FROM user_friend WHERE id = #{MyId} AND user_id = #{FriendId}
+    </select>
+
+    <insert id="addFriendById" parameterType="com.example.web.demo.model.AddFriendModel">
+        INSERT INTO user_friend (id , user_id) VALUES (#{myId},#{friendId})
+    </insert>
+
+    <insert id="addFriendByIdFriend" parameterType="com.example.web.demo.model.AddFriendModel">
+        INSERT INTO user_friend (id , user_id) VALUES (#{friendId},#{myId})
+    </insert>
+
+    <delete id="deleteFriend" parameterType="com.example.web.demo.model.SearchModel">
+        DELETE FROM user_friend WHERE id = #{myId} AND user_id = #{friendId}
+        OR
+        id = #{friendId} AND user_id = #{myId}
+    </delete>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web.demo.mapper.MsgMapper">
+    <resultMap id="msgMap" type="com.example.web.demo.model.PauseMsg">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="fromUserAccount" column="from_user_account"/>
+        <result property="toUserAccount" column="to_user_account"/>
+    </resultMap>
+
+    <insert id="savePauseMessage" parameterType="com.example.web.demo.model.Msg">
+        INSERT INTO msg_store (content,type,from_user_account,to_user_account)
+        VALUES
+        (#{content},#{type},#{fromUserAccount},#{toUserAccount})
+    </insert>
+
+    <select id="selectPauseMessage" resultMap="msgMap">
+        SELECT * FROM msg_store WHERE to_user_account = #{toUserAccount}
+    </select>
+
+    <delete id="deletePauseMessage">
+        DELETE FROM msg_store WHERE to_user_account = #{toUserAccount}
+    </delete>
+</mapper>
