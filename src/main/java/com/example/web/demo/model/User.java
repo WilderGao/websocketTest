@@ -61,7 +61,6 @@ public class User implements Comparable<User>{
         this.userSex = userSex;
     }
 
-
     @Override
     public int compareTo( User o) {
         return this.getUserName().compareTo(o.getUserName());
