@@ -4,15 +4,18 @@ import com.example.web.demo.model.Msg;
 import com.example.web.demo.model.PauseMsg;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 /**
- * @Author:高键城
+ * @author Administrator
  * @time：
  * @Discription：
  */
 @Mapper
+@Repository
 public interface MsgMapper {
     /**
      * 服务器暂存消息

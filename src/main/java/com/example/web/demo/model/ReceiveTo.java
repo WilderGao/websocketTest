@@ -1,35 +1,15 @@
 package com.example.web.demo.model;
 
+import lombok.Data;
+
 /**
- * @Author:高键城
+ * @author Administrator
  * @time：
  * @Discription：
  */
+@Data
 public class ReceiveTo<T> {
     private int method;
     private T requestBody;
 
-    public int getMethod() {
-        return method;
-    }
-
-    public void setMethod(int method) {
-        this.method = method;
-    }
-
-    public T getRequestBody() {
-        return requestBody;
-    }
-
-    public void setRequestBody(T requestBody) {
-        this.requestBody = requestBody;
-    }
-
-    @Override
-    public String toString() {
-        return "ReceiveTo{" +
-                "method=" + method +
-                ", requestBody=" + requestBody +
-                '}';
-    }
 }

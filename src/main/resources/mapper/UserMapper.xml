@@ -31,8 +31,10 @@
         user_role.user_age,
         user_role.user_sex
         FROM user_role
-        LEFT JOIN user_friend
-        ON user_role.user_id = user_friend.user_id
+        LEFT JOIN
+        user_friend
+        ON
+        user_role.user_id = user_friend.user_id
         WHERE user_friend.id = #{userId}
     </select>
 
@@ -50,19 +52,32 @@
 
     <!--用来判断该人是否已经是他的好友-->
     <select id="searchFriendExit" resultMap="idMap">
-        SELECT user_id FROM user_friend WHERE id = #{MyId} AND user_id = #{FriendId}
+        SELECT
+        user_id
+        FROM user_friend
+        WHERE
+        id = #{MyId} AND user_id = #{FriendId}
     </select>
 
     <insert id="addFriendById" parameterType="com.example.web.demo.model.AddFriendModel">
-        INSERT INTO user_friend (id , user_id) VALUES (#{myId},#{friendId})
+        INSERT INTO
+        user_friend
+        (id , user_id)
+        VALUES
+        (#{myId},#{friendId})
     </insert>
 
     <insert id="addFriendByIdFriend" parameterType="com.example.web.demo.model.AddFriendModel">
-        INSERT INTO user_friend (id , user_id) VALUES (#{friendId},#{myId})
+        INSERT INTO
+            user_friend
+            (id , user_id)
+        VALUES
+            (#{friendId},#{myId})
     </insert>
 
     <delete id="deleteFriend" parameterType="com.example.web.demo.model.SearchModel">
-        DELETE FROM user_friend WHERE id = #{myId} AND user_id = #{friendId}
+        DELETE FROM user_friend
+        WHERE id = #{myId} AND user_id = #{friendId}
         OR
         id = #{friendId} AND user_id = #{myId}
     </delete>

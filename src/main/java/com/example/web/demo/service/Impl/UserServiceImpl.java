@@ -6,6 +6,7 @@ import com.example.web.demo.mapper.UserMapper;
 import com.example.web.demo.model.*;
 import com.example.web.demo.service.UserService;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,12 @@ import java.util.Map;
 
 /**
  * @author Administrator
- * @time：
- * @Discription：
+ * time：
+ * Description：
  */
 @Service
 @Component
+@Slf4j
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -70,10 +72,10 @@ public class UserServiceImpl implements UserService{
                 if (msg.getToUser().getUserAccount().equals(entry.getKey().getUserAccount())){
                     //将信息发送到对应的session中
                     try {
-                        isSendSuccessful = true;
                         entry.getValue().getBasicRemote().sendText(methodEnum.CHAT_USER.getState()+gson.toJson(msg));
+                        isSendSuccessful = true;
                     } catch (IOException e) {
-                        System.out.println("信息发送失败");
+                        log.info("信息发送失败");
                         e.printStackTrace();
                     }
                 }
@@ -82,7 +84,7 @@ public class UserServiceImpl implements UserService{
                 //表明信息没有发送过去，也就是说那个客户端不在线
                 //将数据保存到数据库
                 msgMapper.savePauseMessage(msg);
-                System.out.println("数据暂存到服务器中");
+                log.info("接收者不在线，数据暂存到服务器中");
             }
         }
     }

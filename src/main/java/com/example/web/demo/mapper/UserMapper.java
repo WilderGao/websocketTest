@@ -5,15 +5,17 @@ import com.example.web.demo.model.SearchModel;
 import com.example.web.demo.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author Administrator
- * @time：
- * @Discription：
+ * time：
+ * Description：
  */
 @Mapper
+@Repository
 public interface UserMapper {
     /**
      * @param user 用户名
